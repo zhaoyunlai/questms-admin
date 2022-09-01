@@ -83,6 +83,131 @@ export const constantRoutes = [
       }
     ]
   },
+   //==========
+   {
+    path: '/department',
+    redirectTo: '/department/studentDepartment',
+    name: '部门管理',
+    meta: { title: '部门管理', icon: 'form' },
+    component: Layout,
+    children: [{
+      path: 'studentDepartment',
+      name: '学生部门管理',
+      component: () => import('@/views/department/studentDepartment'),
+      meta: { title: '学生部门管理', icon: 'form' }
+    },
+    {
+      path: 'teacherDepartment',
+      name: '教师部门管理',
+      component: () => import('@/views/department/teacherDepartment'),
+      meta: { title: '教师部门管理', icon: 'form' }
+    },
+    {
+      path: 'laboratory',
+      name: '实验室管理',
+      component: () => import('@/views/department/laboratory/index'), // Parent router-view
+      meta: { title: '实验室管理', icon: 'form' },
+      children: [
+        {
+          path: 'list',
+          name: '实验室列表',
+          component: () => import('@/views/department/laboratory/list'),
+          meta: { title: '实验室列表', icon: 'form' },
+        },
+        {
+          path: 'save',
+          name: '添加实验室',
+          component: () => import('@/views/department/laboratory/save'),
+          meta: { title: '添加实验室', icon: 'form' },
+        },
+        {
+          path: 'edit/:id',
+          name: '修改实验室',
+          component: () => import('@/views/department/laboratory/save'),
+          meta: { title: '修改实验室', icon: 'form' },
+          hidden:true
+        },
+        {
+          path: 'info/:id',
+          name: '查看实验室',
+          component: () => import('@/views/department/laboratory/info'),
+          meta: { title: '修改实验室', icon: 'form' },
+          hidden:true
+        }
+      ]
+    }]
+  },
+
+  {
+    path: '/member',
+    component: Layout,
+    name: '人员管理',
+    redirect: '/member/student',
+    meta: { title: '人员管理', icon: 'form' },
+    children: [
+      {
+        path: 'student',
+        name: '学生管理',
+        component: () => import('@/views/member/student/index'), // Parent router-view
+        meta: { title: '学生管理', icon: 'form' },
+        children: [
+          {
+            path: 'list',
+            name: '学生列表',
+            component: () => import('@/views/member/student/list'),
+            meta: { title: '学生列表', icon: 'form' },
+          },
+          {
+            path: 'save',
+            name: '添加学生',
+            component: () => import('@/views/member/student/save'),
+            meta: { title: '添加学生', icon: 'form' },
+          }]
+      },
+      {
+        path: '/teacher',
+        name: '教师管理',
+        component: () => import('@/views/member/teacher/index'),
+        meta: { title: '教师管理', icon: 'form' },
+        children: [
+          {
+            path: 'list',
+            name: '教师列表',
+            component: () => import('@/views/member/teacher/list'),
+            meta: { title: '教师列表', icon: 'form' },
+          },
+          {
+            path: 'save',
+            name: '添加教师',
+            component: () => import('@/views/member/teacher/save'),
+            meta: { title: '添加教师', icon: 'form' },
+          }]
+      }]
+  },
+  {
+    path: '/device',
+    component: Layout,
+    redirect: '/device/list',
+    name: '设备管理',
+    meta: { title: '设备管理', icon: 'example' },
+    children: [
+      {
+        path: 'record',
+        name: '借用管理',
+        component: () => import('@/views/device/record'),
+        meta: { title: '借用管理', icon: 'form' }
+      }, {
+        path: 'list',
+        name: '设备列表',
+        component: () => import('@/views/device/list'),
+        meta: { title: '设备列表', icon: 'form' }
+      }, {
+        path: 'index',
+        name: '添加设备',
+        component: () => import('@/views/device/save'),
+        meta: { title: '添加设备', icon: 'form' }
+      }]
+  },
   {
     path: '/documentation',
     component: Layout,

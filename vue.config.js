@@ -29,6 +29,8 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  //配置webpack-dev-server ，具体见https://www.webpackjs.com/configuration/dev-server/#devserver-proxy
+  //解决跨域问题，dev环境下使用webpack-dev-server，prod环境使用nginx反向代理
   devServer: {
     port: port,
     open: true,
@@ -36,7 +38,18 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    // before: require('./mock/mock-server.js'),
+    proxy: {
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://localhost:8222`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    },
+    disableHostCheck: true
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
